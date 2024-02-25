@@ -2,8 +2,8 @@ import type { Endpoints } from '@octokit/types';
 import type { AppLoadContext } from '@remix-run/cloudflare';
 
 export const metadata = {
-	repo: 'remix-cloudflare-template',
-	owner: 'edmundhung',
+	repo: 'remix-cloudflare-test',
+	owner: 'cpro95',
 };
 
 export function getHeaders(auth: string | undefined) {
@@ -47,7 +47,6 @@ export async function getFileContent(options: {
 	if (Array.isArray(file) || file.type !== 'file') {
 		throw new Response('Not found', { status: 404 });
 	}
-
 	return atob(file.content);
 }
 

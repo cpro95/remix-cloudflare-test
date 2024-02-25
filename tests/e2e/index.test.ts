@@ -8,7 +8,7 @@ test('shows the package name', async ({ page }) => {
 	await page.goto('/');
 
 	const title = page.getByRole('heading', {
-		name: 'remix-cloudflare-template',
+		name: 'remix-cloudflare-test',
 		level: 2,
 	});
 
