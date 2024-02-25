@@ -1,7 +1,7 @@
-import typeography from '@tailwindcss/typography';
+import typography from '@tailwindcss/typography';
 
 export default {
 	content: ['./app/**/*.tsx', './app/**/*.ts'],
 	theme: {},
-	plugins: [typeography],
+	plugins: [typography],
 };
