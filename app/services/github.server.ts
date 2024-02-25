@@ -49,10 +49,10 @@ export async function getFileContent(options: {
 	}
 	// return atob(file.content);
 
-	// Decode using TextDecoder with UTF-8 encoding
-    const content = new TextDecoder('utf-8').decode(base64ToArrayBuffer(file.content));
+	// Decode using custom UTF-8 decoding function
+	const content = decodeUTF8(file.content);
 
-    return content;
+	return content;
 }
 
 export async function getFileContentWithCache(
@@ -80,15 +80,14 @@ export async function getFileContentWithCache(
 	return content;
 }
 
+function decodeUTF8(base64: string): string {
+	const binaryString = atob(base64);
+	const bytes = new Uint8Array(binaryString.length);
 
-function base64ToArrayBuffer(base64: string): Uint8Array {
-    const binaryString = atob(base64);
-    const length = binaryString.length;
-    const bytes = new Uint8Array(length);
+	for (let i = 0; i < binaryString.length; i++) {
+		bytes[i] = binaryString.charCodeAt(i);
+	}
 
-    for (let i = 0; i < length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-
-    return bytes;
+	// Use TextDecoder to handle UTF-8 decoding
+	return new TextDecoder('utf-8').decode(bytes);
 }
