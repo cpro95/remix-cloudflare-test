@@ -47,7 +47,12 @@ export async function getFileContent(options: {
 	if (Array.isArray(file) || file.type !== 'file') {
 		throw new Response('Not found', { status: 404 });
 	}
-	return atob(file.content);
+	// return atob(file.content);
+
+	// Decode using TextDecoder with UTF-8 encoding
+    const content = new TextDecoder('utf-8').decode(base64ToArrayBuffer(file.content));
+
+    return content;
 }
 
 export async function getFileContentWithCache(
@@ -73,4 +78,17 @@ export async function getFileContentWithCache(
 	await context.env.cache.put(key, content, { expirationTtl: 60 * 60 });
 
 	return content;
+}
+
+
+function base64ToArrayBuffer(base64: string): Uint8Array {
+    const binaryString = atob(base64);
+    const length = binaryString.length;
+    const bytes = new Uint8Array(length);
+
+    for (let i = 0; i < length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return bytes;
 }
